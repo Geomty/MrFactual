@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js");
-const { logoURL } = require("../config");
 
 class MrFactualEmbed extends MessageEmbed {
     constructor(options = {}) {
@@ -7,7 +6,7 @@ class MrFactualEmbed extends MessageEmbed {
         this.setColor("RANDOM");
         this.setFooter("Thanks for using me!");
         if (!options.dontIncludeThumbnail) {
-            this.setThumbnail(logoURL);
+            this.setThumbnail("https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualTemporaryLogo.jpg");
         }
     }
 }
