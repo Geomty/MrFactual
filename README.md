@@ -1,2 +1,12 @@
-# MrFactual
- A Discord bot/teacher just trying to make everyone a little smarter!
+# Mr. Factual
+**Say hi to Mr. Factual, a new Discord bot designed to teach everyone about everything!**
+
+Invite link: [Click here](https://discord.com/oauth2/authorize?client_id=812869459374243872&scope=bot&permissions=379968)
+
+Support server: [Click here](https://discord.gg/yXkB68EA8S)
+
+## DISCLAIMER:
+Mr. Factual does not have any actual fact commands *yet*.
+
+## Hosting
+Please don't lol, at least not yet.
