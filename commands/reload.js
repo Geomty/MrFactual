@@ -12,7 +12,7 @@ module.exports = {
                 for (const file of commandFiles) {
                     delete require.cache[require.resolve(`./${file}`)];
                     const newCommand = require(`./${file}`);
-	                message.client.commands.set(newCommand.name, newCommand);
+	            message.client.commands.set(newCommand.name, newCommand);
                 }
                 m.edit("Commands reloaded!");
             });

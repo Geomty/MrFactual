@@ -22,7 +22,7 @@ module.exports = {
                 helpMessage += `\n\n**${guildPrefix}${command.name} ${command.usage || ""}**\n${command.description}`;
             }
         }
-        const helpEmbed = new utils.MrFactualEmbed()
+        const helpEmbed = new utils.embeds.MrFactualEmbed()
         .setTitle("Hi, I'm Mr. Factual!")
         .setDescription(helpMessage)
         message.channel.send(helpEmbed);

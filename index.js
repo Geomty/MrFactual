@@ -15,7 +15,7 @@ for (const file of commandFiles) {
 
 client.once("ready", () => {
     console.log(chalk.greenBright("Mr. Factual is ready to go!"));
-    client.user.setActivity("you learn", { type: "WATCHING"});
+    client.user.setActivity("you learn", { type: "WATCHING" });
     utils.database.databaseInit();
 });
 

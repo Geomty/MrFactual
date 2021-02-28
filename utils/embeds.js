@@ -11,4 +11,15 @@ class MrFactualEmbed extends MessageEmbed {
     }
 }
 
-module.exports = MrFactualEmbed;
+class MrFactualErrorEmbed extends MessageEmbed {
+    constructor() {
+        super();
+        this.setColor("RANDOM");
+        this.setTitle("Something went wrong...");
+    }
+}
+
+module.exports = {
+    MrFactualEmbed,
+    MrFactualErrorEmbed
+}

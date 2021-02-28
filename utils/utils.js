@@ -1,9 +1,9 @@
-const MrFactualEmbed = require("./embeds");
+const embeds = require("./embeds");
 const database = require("./database");
 const secretUtils = require("./secretUtils");
 
 module.exports = {
-    MrFactualEmbed,
+    embeds,
     database,
     secretUtils
 }

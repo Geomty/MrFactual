@@ -6,7 +6,7 @@ module.exports = {
     name: "info",
     description: "This command shows detailed information about me.",
     execute(message) {
-        const infoEmbed = new utils.MrFactualEmbed()
+        const infoEmbed = new utils.embeds.MrFactualEmbed()
         .setTitle("Free information about me!")
         .setDescription("Woohoo!")
         .addFields(
