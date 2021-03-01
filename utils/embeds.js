@@ -14,7 +14,7 @@ class MrFactualEmbed extends MessageEmbed {
 class MrFactualErrorEmbed extends MessageEmbed {
     constructor() {
         super();
-        this.setColor("RANDOM");
+        this.setColor("#FF0000");
         this.setTitle("Something went wrong...");
     }
 }
