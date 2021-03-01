@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const utils = require("../utils/utils")
-const { ownerID } = require("../config");
+const { owner } = require("../config");
 
 module.exports = {
     name: "info",
@@ -10,7 +10,7 @@ module.exports = {
         .setTitle("Free information about me!")
         .setDescription("Woohoo!")
         .addFields(
-            { name: "Creator:", value: message.client.users.cache.get(ownerID).tag },
+            { name: "Creator:", value: owner.tag },
             { name: "Stats:", value: `${message.client.guilds.cache.size} Servers\n${message.client.channels.cache.size} Channels\n${message.client.users.cache.size} Users` },
             { name: "Made with:", value: `Discord.js v${Discord.Constants.Package._id.slice(11, Discord.Constants.Package._id.length)}\nNode.js ${process.version}` },
             { name: "Uptime:", value: `${Math.floor(message.client.uptime/1000/60)} Minutes` },

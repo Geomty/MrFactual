@@ -1,12 +1,12 @@
 const fs = require("fs");
-const { ownerID } = require("../config");
+const { owner } = require("../config");
 
 module.exports = {
     name: "reload",
     description: "Reload all my commands.",
     hidden: true,
     execute(message) {
-        if (message.author.id == ownerID) {
+        if (message.author.id == owner.id) {
             message.channel.send("Reloading commands...").then(m => {
                 const commandFiles = fs.readdirSync(__dirname).filter(file => file.endsWith('.js'));
                 for (const file of commandFiles) {

@@ -25,5 +25,6 @@ module.exports = async message => {
     } catch(error) {
         const handlers = require("./handlers");
         handlers.errorHandler.regularError(error, message);
+        console.log(error);
     }
 }
