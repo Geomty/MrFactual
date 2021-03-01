@@ -6,7 +6,7 @@ class MrFactualEmbed extends MessageEmbed {
         this.setColor("RANDOM");
         this.setFooter("Thanks for using me!");
         if (!options.dontIncludeThumbnail) {
-            this.setThumbnail("https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualLogo.jpg");
+            this.setThumbnail("https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualTemporaryLogo.jpg");
         }
     }
 }
