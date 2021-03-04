@@ -1,5 +1,5 @@
 const utils = require("../utils/utils")
-const { prefix, botID } = require("../config");
+const { prefix, bot_id } = require("../config");
 
 module.exports = async message => {
     let guildPrefix;
@@ -10,7 +10,7 @@ module.exports = async message => {
         guildPrefix = result.prefix;
     }
 
-    if (message.content == `<@!${botID}>`) {
+    if (message.content == `<@!${bot_id}>`) {
         message.channel.send(`Hello! I noticed you pinged me! My prefix for this server is \`${guildPrefix}\`!`);
     }
 

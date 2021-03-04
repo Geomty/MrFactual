@@ -1,4 +1,4 @@
-const { owner, coOwners, inspirationBot } = require("../config");
+const { owner, co_owners, inspiration_bot } = require("../config");
 const utils = require("../utils/utils");
 
 module.exports = {
@@ -10,8 +10,8 @@ module.exports = {
         .setDescription("Make sure to thank them!")
         .addFields(
             { name: "Developer:", value: owner.tag },
-            { name: "Inspiration for my name:", value: coOwners.one.tag },
-            { name: "Inspiration for my purpose:", value: `${inspirationBot.tag} by ${coOwners.two.tag}` }
+            { name: "Inspiration for my name:", value: co_owners.first.tag },
+            { name: "Inspiration for my purpose:", value: `${inspiration_bot.tag} by ${co_owners.second.tag}` }
         )
         message.channel.send(creditsEmbed);
     }
