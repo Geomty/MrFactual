@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
-const utils = require("../utils/utils")
-const { owner } = require("../config");
+const utils = require("../../utils/utils")
+const { owner } = require("../../config");
 
 module.exports = {
     name: "info",

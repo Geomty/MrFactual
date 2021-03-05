@@ -1,5 +1,5 @@
-const { owner, co_owners, inspiration_bot } = require("../config");
-const utils = require("../utils/utils");
+const { owner, co_owners, inspiration_bot } = require("../../config");
+const utils = require("../../utils/utils");
 
 module.exports = {
     name: "credits",

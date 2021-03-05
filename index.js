@@ -7,10 +7,13 @@ const handlers = require("./handlers/handlers");
 const { token } = require("./config");
 
 client.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync(__dirname + "/commands/").filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(__dirname + `/commands/${file}`);
-    client.commands.set(command.name, command);
+const commandFolders = fs.readdirSync(__dirname + "/commands/");
+for (const folder of commandFolders) {
+    const commandFiles = fs.readdirSync(__dirname + `/commands/${folder}/`).filter(file => file.endsWith(".js"));
+    for (const file of commandFiles) {
+        const command = require(__dirname + `/commands/${folder}/${file}`);
+        client.commands.set(command.name, command);
+    }
 }
 
 client.once("ready", () => {

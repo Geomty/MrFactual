@@ -1,11 +1,14 @@
-const utils = require("../utils/utils");
-const { prefix } = require("../config");
+const utils = require("../../utils/utils");
+const { prefix } = require("../../config");
 
 module.exports = {
     name: "prefix",
     description: "Set a custom prefix. Put `--` at the end of your new prefix to represent a space.",
     usage: "<new prefix (optional)>",
     async execute(message, args) {
+        if (!message.member.permissions.has(32)) {
+            return message.channel.send("You need the `MANAGE_SERVER` permission to change my prefix!");
+        }
         if (args[0]) {
             if (args[0].endsWith("--") && args[0].length > 2) {
                 args[0] = args[0].slice(0, args[0].lastIndexOf("--"));

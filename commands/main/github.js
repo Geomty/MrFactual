@@ -1,6 +1,5 @@
-const fetch = require("node-fetch");
-const utils = require("../utils/utils")
-const { github_api_url } = require("../config");
+const utils = require("../../utils/utils")
+const { github_api_url } = require("../../config");
 
 module.exports = {
     name: "github",
@@ -8,51 +7,43 @@ module.exports = {
     execute(message) {
         message.channel.send("Fetching info...").then(async m => {
             const path = "/repos/Geomty/MrFactual";
-            const githubRes = await fetch(`${github_api_url}${path}`);
-            const githubData = await githubRes.json();
+            const githubData = await utils.http.makeGetRequest(github_api_url + path);
             if (githubData.message && githubData.message.includes("API rate limit exceeded")) {
                 return message.channel.send("Uh oh, I've been rate limited from GitHub's API. Try again in a few minutes.");
             }
-            const contributorRes = await fetch(`${github_api_url}${path}/contributors`);
-            const contributorData = await contributorRes.json();
+            const contributorData = await utils.http.makeGetRequest(github_api_url + path + "/contributors");
             let contributorArray = [];
-            for (const contributor in contributorData) {
-                contributorArray.push(`${contributorData[contributor].login} (${contributorData[contributor].contributions} contributions)`);
+            for (const contributor of contributorData) {
+                contributorArray.push(`${contributor.login} (${contributor.contributions} contributions)`);
             }
             let contributorMessage = contributorArray.join(", ");
-            const languageRes = await fetch(`${github_api_url}${path}/languages`);
-            const languageData = await languageRes.json();
+            const languageData = await utils.http.makeGetRequest(github_api_url + path + "/languages");
             let languageArray = [];
             for (const language in languageData) {
                 languageArray.push(`${language} (${languageData[language]} bytes of code)`);
             }
             let languageMessage = languageArray.join(", ");
-            const branchRes = await fetch(`${github_api_url}${path}/branches`);
-            const branchData = await branchRes.json();
+            const branchData = await utils.http.makeGetRequest(github_api_url + path + "/branches");
             let branchMessage = 0;
-            for (const branch in branchData) {
+            for (const branch of branchData) {
                 branchMessage++;
             }
-            const contentRes = await fetch(`${github_api_url}${path}/contents`);
-            const contentData = await contentRes.json();
+            const contentData = await utils.http.makeGetRequest(github_api_url + path + "/contents");
             let contentMessage = 0;
-            for (const content in contentData) {
+            for (const content of contentData) {
                 contentMessage++;
             }
-            const issueRes = await fetch(`${github_api_url}${path}/issues`);
-            const issueData = await issueRes.json();
+            const issueData = await utils.http.makeGetRequest(github_api_url + path + "/issues");
             let issueMessage = 0;
-            for (const issue in issueData) {
+            for (const issue of issueData) {
                 issueMessage++;
             }
-            const pullRes = await fetch(`${github_api_url}${path}/pulls`);
-            const pullData = await pullRes.json();
+            const pullData = await utils.http.makeGetRequest(github_api_url + path + "/pulls");
             let pullMessage = 0;
-            for (const pull in pullData) {
+            for (const pull of pullData) {
                 pullMessage++;
             }
-            const commitRes = await fetch(`${github_api_url}${path}/commits`);
-            const commitData = await commitRes.json();
+            const commitData = await utils.http.makeGetRequest(github_api_url + path + "/commits");
             let commitMessage = `"${commitData[0].commit.message}" by ${commitData[0].commit.author.name} on ${new Date(commitData[0].commit.author.date)}`;
 
             const githubEmbed = new utils.embeds.MrFactualEmbed()

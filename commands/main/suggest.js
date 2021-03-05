@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const { suggestion_channel } = require("../config");
+const { suggestion_channel } = require("../../config");
 
 module.exports = {
     name: "suggest",
