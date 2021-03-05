@@ -6,7 +6,7 @@ module.exports = {
     name: "help",
     description: "The help command, shows you a list of every command.",
     usage: "<command category (optional)>",
-    async execute(message, args) {
+    async execute(message) {
         let guildPrefix;
         const result = await utils.database.findDocument("prefixes", { serverID: message.guild.id });
         if (!result) {
@@ -15,28 +15,70 @@ module.exports = {
             guildPrefix = result.prefix;
         }
 
-        let helpMessage = "I'm a bot/teacher just trying to make everyone a little smarter!";
-        if (!args[0]) {
-            const helpEmbed = new utils.embeds.MrFactualEmbed()
-            .setTitle("Hi, I'm Mr. Factual!")
-            .setDescription(helpMessage)
-            .addFields(
-                { name: "Prefix:", value: `\`${guildPrefix}\`` },
-                { name: "Command categories:", value: fs.readdirSync("../MrFactual/commands/").join(", ").replace("dev, ", "") + `\n\nUse \`${guildPrefix}help <command category>\` to view all commands in that category!` }
-            )
-            message.channel.send(helpEmbed);
-        } else {
-            if (!fs.existsSync(`../MrFactual/commands/${args[0]}`) || args[0] == "dev") return message.channel.send("That command category doesn't exist!");
-            const commandFiles = fs.readdirSync(`../MrFactual/commands/${args[0]}/`).filter(file => file.endsWith(".js")); //file paths ahhh
-            helpMessage += ` Here are all the commands in the ${args[0].toLowerCase()} category:`
-            for (const file of commandFiles) {
-                const command = require(`../${args[0]}/${file}`);
-                helpMessage += `\n\n**${guildPrefix}${command.name} ${command.usage || ""}**\n${command.description}`;
+        let embedDescription = "";
+        let embeds = [];
+
+        const commandFolders = fs.readdirSync("../MrFactual/commands/"); // FILE PATHS BE LIKE HGHFGHIUHIGHFHGUH
+        for (const folder of commandFolders) {
+            if (folder != "dev") {
+                embedDescription += ` Here are all the commands in the ${folder} category:`;
+                const commandFiles = fs.readdirSync(`../MrFactual/commands/${folder}/`).filter(file => file.endsWith(".js"));
+                for (const file of commandFiles) {
+                    const command = require(`../${folder}/${file}`);
+                    embedDescription += `\n\n**${guildPrefix}${command.name} ${command.usage || ""}**\n${command.description}`;
+                }
+                const embed = new utils.embeds.MrFactualEmbed()
+                .setTitle(folder.charAt(0).toUpperCase() + folder.slice(1) + " Commands")
+                .setDescription(embedDescription)
+                .setFooter(`Page ${embeds.length + 2}`)
+                embed.category = folder;
+                embeds.push(embed);
+                embedDescription = "";
             }
-            const helpEmbed = new utils.embeds.MrFactualEmbed()
-            .setTitle("Hi, I'm Mr. Factual!")
-            .setDescription(helpMessage)
-            message.channel.send(helpEmbed);
         }
+
+        const helpEmbed = new utils.embeds.MrFactualEmbed()
+        .setColor("RANDOM")
+        .setTitle("Hi, I'm Mr. Factual!")
+        .setDescription(`I'm a bot/teacher just trying to make everyone a little smarter! My prefix for this server is \`${guildPrefix}\`.`)
+        .addFields(
+            { name: "How to use the menu:", value: "Click the arrow reactions below to \"change\" the page." },
+            { name: "Page 1:", value: "You are here" }
+        )
+        .setFooter("Page 1");
+        for (const embed in embeds) {
+            helpEmbed.addField(`Page ${parseInt(embed) + 2}:`, `My ${embeds[embed].category} commands`)
+        }
+        embeds.unshift(helpEmbed);
+
+        message.channel.send("Please wait...").then(async m => {
+            await m.react("⏪")
+            .then(await m.react("⬅"))
+            .then(await m.react("➡"))
+            .then(await m.react("⏩"))
+            .then(m.edit(helpEmbed))
+            .then(m.edit(""));
+            let page = 0;
+            const collector = m.createReactionCollector((_, user) => user.id == message.author.id);
+            collector.on("collect", reaction => {
+                reaction.users.remove(message.author.id);
+                switch (reaction.emoji.name) {
+                    case "⏪":
+                        page = 0;
+                        break;
+                    case "⬅":
+                        page = (page != 0) ? page - 1 : page;
+                        break;
+                    case "➡":
+                        page = (page != embeds.length - 1) ? page + 1 : page;
+                        break;
+                    case "⏩":
+                        page = embeds.length - 1;
+                        break;
+                    }
+                    m.edit(embeds[page]);
+                }
+            );
+        });
     }
 }
