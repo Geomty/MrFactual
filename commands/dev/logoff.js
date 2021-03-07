@@ -1,4 +1,4 @@
-const { owner } = require("../../config");
+const { owner } = require("../../config").people;
 
 module.exports = {
     name: "logoff",

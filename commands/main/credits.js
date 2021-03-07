@@ -1,4 +1,4 @@
-const { owner, co_owners, inspiration_bot } = require("../../config");
+const { owner, co_owners, inspiration_bot } = require("../../config").people;
 const utils = require("../../utils/utils");
 
 module.exports = {

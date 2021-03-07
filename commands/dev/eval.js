@@ -1,4 +1,4 @@
-const { owner, co_owners } = require("../../config");
+const { owner, co_owners } = require("../../config").people;
 
 module.exports = {
     name: "eval",

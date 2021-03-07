@@ -30,12 +30,14 @@ module.exports = {
                 const embed = new utils.embeds.MrFactualEmbed()
                 .setTitle(folder.charAt(0).toUpperCase() + folder.slice(1) + " Commands")
                 .setDescription(embedDescription)
-                .setFooter(`Page ${embeds.length + 2}`)
                 embed.category = folder;
                 embeds.push(embed);
                 embedDescription = "";
             }
         }
+        
+        embedsOrder = ["main", "fact", "management"];
+        embeds.sort((a, b) => embedsOrder.indexOf(a.category) - embedsOrder.indexOf(b.category));
 
         const helpEmbed = new utils.embeds.MrFactualEmbed()
         .setColor("RANDOM")
@@ -48,6 +50,7 @@ module.exports = {
         .setFooter("Page 1");
         for (const embed in embeds) {
             helpEmbed.addField(`Page ${parseInt(embed) + 2}:`, `My ${embeds[embed].category} commands`)
+            embeds[embed].setFooter(`Page ${parseInt(embed) + 2}`);
         }
         embeds.unshift(helpEmbed);
 

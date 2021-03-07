@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { owner } = require("../../config");
+const { owner } = require("../../config").people;
 
 module.exports = {
     name: "reload",
