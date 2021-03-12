@@ -35,7 +35,7 @@ client.once("ready", () => {
             data: command[1].json
         });
     }
-    console.log(chalk.blueBright("Slash commands are ready to go!"));
+    console.log(chalk.yellowBright("Slash commands are ready to go!"));
 });
 
 client.ws.on("INTERACTION_CREATE", interaction => {
