@@ -20,7 +20,7 @@ module.exports = {
 
         const commandFolders = fs.readdirSync("../MrFactual/commands/"); // FILE PATHS BE LIKE HGHFGHIUHIGHFHGUH
         for (const folder of commandFolders) {
-            if (folder != "dev") {
+            if (folder != "dev" && folder != "slash") {
                 embedDescription += ` Here are all the commands in the ${folder} category:`;
                 const commandFiles = fs.readdirSync(`../MrFactual/commands/${folder}/`).filter(file => file.endsWith(".js"));
                 for (const file of commandFiles) {
