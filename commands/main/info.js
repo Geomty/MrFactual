@@ -14,7 +14,7 @@ module.exports = {
             { name: "Stats:", value: `${message.client.guilds.cache.size} Servers\n${message.client.channels.cache.size} Channels\n${message.client.users.cache.size} Users` },
             { name: "Made with:", value: `Discord.js v${Discord.Constants.Package._id.slice(11, Discord.Constants.Package._id.length)}\nNode.js ${process.version}` },
             { name: "Uptime:", value: `${Math.floor(message.client.uptime/1000/60)} Minutes` },
-            { name: "Links:", value: "Invite link: [Click here](https://discord.com/oauth2/authorize?client_id=812869459374243872&scope=bot&permissions=379968)\nSupport server: [Click here](https://discord.gg/yXkB68EA8S)\nGitHub repository: [Click here](https://github.com/Geomty/MrFactual)" },
+            { name: "Links:", value: "Invite link: [Click here](https://discord.com/oauth2/authorize?client_id=812869459374243872&permissions=379968&scope=applications.commands%20bot)\nSupport server: [Click here](https://discord.gg/yXkB68EA8S)\nGitHub repository: [Click here](https://github.com/Geomty/MrFactual)" },
             { name: "Created on:", value: message.client.user.createdAt }
         )
         message.channel.send(infoEmbed);
