@@ -1,11 +1,9 @@
-const createdGuildHandler = require("./createdGuildHandler");
-const errorHandler = require("./errorHandler");
-const messageHandler = require("./messageHandler");
-const slashCommandHandler = require("./slashCommandHandler");
+const fs = require("fs");
 
-module.exports = {
-     createdGuildHandler,
-     errorHandler,
-     messageHandler,
-     slashCommandHandler
+for (const handler of fs.readdirSync(__dirname)) {
+    const handlerName = handler.slice(0, -3);
+    if (handlerName != "handlers") {
+        const handlerFile = require(`./${handlerName}`);
+        module.exports[handlerName] = handlerFile;
+    }
 }

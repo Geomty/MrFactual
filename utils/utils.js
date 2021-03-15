@@ -1,13 +1,9 @@
-const client = require("./client");
-const database = require("./database");
-const embeds = require("./embeds");
-const http = require("./http");
-const secretUtils = require("./secretUtils");
+const fs = require("fs");
 
-module.exports = {
-    client,
-    database,
-    embeds,
-    http,
-    secretUtils
+for (const util of fs.readdirSync(__dirname)) {
+    const utilName = util.slice(0, -3);
+    if (utilName != "utils") {
+        const utilFile = require(`./${utilName}`);
+        module.exports[utilName] = utilFile;
+    }
 }
