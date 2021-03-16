@@ -5,7 +5,6 @@ const { prefix } = require("../../config");
 module.exports = {
     name: "help",
     description: "The help command, shows you a list of every command.",
-    usage: "<command category (optional)>",
     async execute(message) {
         let guildPrefix;
         const result = await utils.database.findDocument("prefixes", { serverID: message.guild.id });
@@ -35,7 +34,7 @@ module.exports = {
                 embedDescription = "";
             }
         }
-        
+
         embedsOrder = ["main", "fact", "management"];
         embeds.sort((a, b) => embedsOrder.indexOf(a.category) - embedsOrder.indexOf(b.category));
 
@@ -54,34 +53,6 @@ module.exports = {
         }
         embeds.unshift(helpEmbed);
 
-        message.channel.send("Please wait...").then(async m => {
-            await m.react("⏪")
-            .then(await m.react("⬅"))
-            .then(await m.react("➡"))
-            .then(await m.react("⏩"))
-            .then(m.edit(helpEmbed))
-            .then(m.edit(""));
-            let page = 0;
-            const collector = m.createReactionCollector((_, user) => user.id == message.author.id);
-            collector.on("collect", reaction => {
-                reaction.users.remove(message.author.id);
-                switch (reaction.emoji.name) {
-                    case "⏪":
-                        page = 0;
-                        break;
-                    case "⬅":
-                        page = (page != 0) ? page - 1 : page;
-                        break;
-                    case "➡":
-                        page = (page != embeds.length - 1) ? page + 1 : page;
-                        break;
-                    case "⏩":
-                        page = embeds.length - 1;
-                        break;
-                    }
-                    m.edit(embeds[page]);
-                }
-            );
-        });
+        message.channel.send("Please wait...").then(async m => await utils.paginator.createPaginator(message, m, helpEmbed, embeds));
     }
 }
