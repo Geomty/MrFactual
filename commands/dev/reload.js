@@ -7,13 +7,13 @@ module.exports = {
     execute(message) {
         if (message.author.id == owner.id) {
             message.channel.send("Reloading commands...").then(m => {
-                const commandFolders = fs.readdirSync("../MrFactual/commands/"); // file paths are so weird
+                const commandFolders = fs.readdirSync("./commands/");
                 for (const folder of commandFolders) {
-                    const commandFiles = fs.readdirSync(`../MrFactual/commands/${folder}/`).filter(file => file.endsWith(".js"));
+                    const commandFiles = fs.readdirSync(`./commands/${folder}/`).filter(file => file.endsWith(".js"));
                     for (const file of commandFiles) {
                         delete require.cache[require.resolve(`../${folder}/${file}`)];
                         const newCommand = require(`../${folder}/${file}`);
-	                message.client.commands.set(newCommand.name, newCommand);
+	                    message.client.commands.set(newCommand.name, newCommand);
                     }
                 }
                 m.edit("Commands reloaded!");

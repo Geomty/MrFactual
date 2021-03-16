@@ -6,22 +6,17 @@ module.exports = {
     name: "help",
     description: "The help command, shows you a list of every command.",
     async execute(message) {
-        let guildPrefix;
         const result = await utils.database.findDocument("prefixes", { serverID: message.guild.id });
-        if (!result) {
-            guildPrefix = prefix;
-        } else {
-            guildPrefix = result.prefix;
-        }
+        let guildPrefix = (result) ? result.prefix : prefix;
 
         let embedDescription = "";
         let embeds = [];
 
-        const commandFolders = fs.readdirSync("../MrFactual/commands/"); // FILE PATHS BE LIKE HGHFGHIUHIGHFHGUH
+        const commandFolders = fs.readdirSync("./commands/");
         for (const folder of commandFolders) {
             if (folder != "dev" && folder != "slash") {
                 embedDescription += ` Here are all the commands in the ${folder} category:`;
-                const commandFiles = fs.readdirSync(`../MrFactual/commands/${folder}/`).filter(file => file.endsWith(".js"));
+                const commandFiles = fs.readdirSync(`./commands/${folder}/`).filter(file => file.endsWith(".js"));
                 for (const file of commandFiles) {
                     const command = require(`../${folder}/${file}`);
                     embedDescription += `\n\n**${guildPrefix}${command.name} ${command.usage || ""}**\n${command.description}`;

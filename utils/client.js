@@ -6,10 +6,10 @@ class MrFactualClient extends Client {
         super();
 
         this.commands = new Collection();
-        const commandFolders = fs.readdirSync("../MrFactual/commands/"); // file paths go brrr
+        const commandFolders = fs.readdirSync("./commands/");
         for (const folder of commandFolders) {
             if (folder != "slash") {
-                const commandFiles = fs.readdirSync(`../MrFactual/commands/${folder}/`).filter(file => file.endsWith(".js"));
+                const commandFiles = fs.readdirSync(`./commands/${folder}/`).filter(file => file.endsWith(".js"));
                 for (const file of commandFiles) {
                     const command = require(`../commands/${folder}/${file}`);
                     this.commands.set(command.name, command);
@@ -18,7 +18,7 @@ class MrFactualClient extends Client {
         }
 
         this.slash = new Collection();
-        const commandFiles = fs.readdirSync("../MrFactual/commands/slash").filter(file => file.endsWith(".js"));
+        const commandFiles = fs.readdirSync("./commands/slash").filter(file => file.endsWith(".js"));
         for (const file of commandFiles) {
             const command = require(`../commands/slash/${file}`);
             this.slash.set(command.json.name, command);
