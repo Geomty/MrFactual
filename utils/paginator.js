@@ -42,8 +42,8 @@ class Paginator {
         });
     }
     deletePaginator(collector) {
-        this.m.reactions.removeAll();
         collector.off("collect", () => {});
+        this.m.reactions.removeAll();
         this.m.edit("This menu has successfully been closed.");
     }
 }
