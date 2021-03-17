@@ -23,7 +23,7 @@ module.exports = {
                 if (remainder) {
                     evalPages.push(`\`\`\`\n${resultString.slice(-remainder, resultString.length)}\n\`\`\``);
                 }
-                message.channel.send("Result too large, creating paginator...").then(async m => await utils.paginator.createPaginator(message, m, evalPages[0], evalPages));
+                message.channel.send("Result too large, creating paginator...").then(m => new utils.paginator.Paginator(message, m, evalPages[0], evalPages));
             } else message.channel.send("```\n" + result + "\n```");
         }
     }

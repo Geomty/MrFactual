@@ -48,6 +48,6 @@ module.exports = {
         }
         embeds.unshift(helpEmbed);
 
-        message.channel.send("Please wait...").then(async m => await utils.paginator.createPaginator(message, m, helpEmbed, embeds));
+        message.channel.send("Please wait...").then(m => new utils.paginator.Paginator(message, m, helpEmbed, embeds));
     }
 }
