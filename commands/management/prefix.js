@@ -14,18 +14,18 @@ module.exports = {
                 args[0] = args[0].slice(0, args[0].lastIndexOf("--"));
                 args[0] = args[0] + " ";
             }
-            const result = await utils.database.findDocument("prefixes", { serverID: message.guild.id });
+            const result = await utils.database.Database.findDocument("prefixes", { serverID: message.guild.id });
             if (result) {
-                await utils.database.changeDocument("prefixes", result, { $set: { prefix: args[0] } });
+                await utils.database.Database.changeDocument("prefixes", result, { $set: { prefix: args[0] } });
                 message.channel.send(`Successfully set prefix to \`${args[0]}\`!`);
             } else {
-                await utils.database.createDocument("prefixes", { serverID: message.guild.id, prefix: args[0] });
+                await utils.database.Database.createDocument("prefixes", { serverID: message.guild.id, prefix: args[0] });
                 message.channel.send(`Successfully set prefix to \`${args[0]}\`!`);
             }
         } else {
-            const result = await utils.database.findDocument("prefixes", { serverID: message.guild.id });
+            const result = await utils.database.Database.findDocument("prefixes", { serverID: message.guild.id });
             if (result) {
-                await utils.database.deleteDocument("prefixes", result);
+                await utils.database.Database.deleteDocument("prefixes", result);
                 message.channel.send(`Successfully reset prefix to \`${prefix}\`!`);
             } else {
                 message.channel.send(`Successfully reset prefix to \`${prefix}\`!`);

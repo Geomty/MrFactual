@@ -10,7 +10,8 @@ const client = new utils.client.MrFactualClient();
 client.once("ready", () => {
     console.log(chalk.greenBright("Mr. Factual is ready to go!"));
     client.user.setActivity("you learn", { type: "WATCHING" });
-    utils.database.databaseInit();
+    const databaseClient = new utils.database.Database();
+    client.databaseClient = databaseClient.client; // lol
 
     for (const command of client.slash) {
         client.api.applications(client.user.id).commands.post({

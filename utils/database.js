@@ -3,39 +3,42 @@ const chalk = require("chalk");
 const { database_url } = require("../config");
 
 let client;
-module.exports.databaseInit = async () => {
-    client = new MongoClient(database_url, { useUnifiedTopology: true });
-    await client.connect();
-    const db = client.db("MrFactual");
-    const collection = db.collection("tests");
-    const result = await collection.findOne({ isMongoReady: "MongoDB is ready to go!" });
-    console.log(chalk.magentaBright(result.isMongoReady));
+class Database {
+    constructor() {
+        client = new MongoClient(database_url, { useUnifiedTopology: true });
+        client.connect().then(() => {
+            const db = client.db("MrFactual");
+            const collection = db.collection("tests");
+            collection.findOne({ isMongoReady: "MongoDB is ready to go!" }).then(result => {
+                console.log(chalk.magentaBright(result.isMongoReady));
+            });
+        });
+        this.client = client;
+    }
+    static async findDocument(collectionQuery, documentQuery) {
+        const db = client.db("MrFactual");
+        const collection = db.collection(collectionQuery);
+        const result = await collection.findOne(documentQuery);
+        return result;
+    }
+    static async createDocument(collectionQuery, documentQuery) {
+        const db = client.db("MrFactual");
+        const collection = db.collection(collectionQuery);
+        const result = await collection.insertOne(documentQuery);
+        return result;
+    }
+    static async deleteDocument(collectionQuery, documentQuery) {
+        const db = client.db("MrFactual");
+        const collection = db.collection(collectionQuery);
+        const result = await collection.deleteOne(documentQuery);
+        return result;
+    }
+    static async changeDocument(collectionQuery, documentQuery, whatToChange) {
+        const db = client.db("MrFactual");
+        const collection = db.collection(collectionQuery);
+        const result = await collection.updateOne(documentQuery, whatToChange);
+        return result;
+    }
 }
 
-module.exports.findDocument = async (collection, document) => {
-    const db = client.db("MrFactual");
-    const dbCollection = db.collection(collection);
-    const result = await dbCollection.findOne(document);
-    return result;
-}
-
-module.exports.createDocument = async (collection, document) => {
-    const db = client.db("MrFactual");
-    const dbCollection = db.collection(collection);
-    const result = await dbCollection.insertOne(document);
-    return result;
-}
-
-module.exports.deleteDocument = async (collection, document) => {
-    const db = client.db("MrFactual");
-    const dbCollection = db.collection(collection);
-    const result = await dbCollection.deleteOne(document);
-    return result;
-}
-
-module.exports.changeDocument = async (collection, document, whatToChange) => {
-    const db = client.db("MrFactual");
-    const dbCollection = db.collection(collection);
-    const result = await dbCollection.updateOne(document, whatToChange);
-    return result;
-}
+module.exports = { Database };
