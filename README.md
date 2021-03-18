@@ -4,9 +4,3 @@
 Invite link: [Click here](https://discord.com/oauth2/authorize?client_id=812869459374243872&scope=bot&permissions=379968)
 
 Support server: [Click here](https://discord.gg/yXkB68EA8S)
-
-## DISCLAIMER:
-Mr. Factual does not have any actual fact commands *yet*.
-
-## Hosting
-Please don't lol, at least not yet.
