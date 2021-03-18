@@ -1,11 +1,10 @@
 const { MongoClient } = require("mongodb");
 const chalk = require("chalk");
-const { database_url } = require("../config");
 
 let client;
 class Database {
     constructor() {
-        client = new MongoClient(database_url, { useUnifiedTopology: true });
+        client = new MongoClient(process.env.DATABASE_URL, { useUnifiedTopology: true });
         client.connect().then(() => {
             const db = client.db("MrFactual");
             const collection = db.collection("tests");

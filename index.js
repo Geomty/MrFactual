@@ -3,7 +3,8 @@ const fs = require("fs");
 const chalk = require("chalk");
 const utils = require("./utils/utils");
 const handlers = require("./handlers/handlers");
-const { token } = require("./config");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const client = new utils.client.MrFactualClient();
 
@@ -38,4 +39,4 @@ process.on("unhandledRejection", error => {
     }
 });
 
-client.login(token);
+client.login(process.env.TOKEN);
