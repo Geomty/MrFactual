@@ -10,7 +10,7 @@ module.exports = {
             if (code.startsWith("```js\n") && code.endsWith("\n```")) {
                 code = code.slice(5, -3);
             }
-            if (code.includes("child_process") || code.includes("bateval")) return message.channel.send("Executing batch is a developer only priviledge. You could shut down the developer's computer with batch...");
+            if (message.author.id != owner.id && code.includes("child_process") || message.author.id != owner.id && code.includes("bateval")) return message.channel.send("Executing batch is a developer only privilege. You could shut down the developer's computer with batch...");
             let result = eval(code);
             let resultString;
             if (result) {

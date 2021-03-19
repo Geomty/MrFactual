@@ -15,8 +15,7 @@ module.exports = {
             child_process.exec(code, [], (error, stdout, stderr) => {
                 if (error) return handlers.errorHandler.regularError(error, message);
                 else {
-                    let result = stdout;
-                    result = utils.secretUtils.secretUtilTwo(result);
+                    let result = utils.secretUtils.secretUtilTwo(stdout);
                     let characterLimit = 1991;
                     if (result.length > characterLimit) {
                         let multiples = Math.floor(result.length / characterLimit);
