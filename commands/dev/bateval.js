@@ -12,24 +12,24 @@ module.exports = {
             if (code.startsWith("```bat\n") && code.endsWith("\n```")) {
                 code = code.slice(6, -3);
             }
-            let result = child_process.exec(code, [], (error, stdout, stderr) => {
-                if (error) {
-                    handlers.errorHandler.regularError(error, message)
-                } else {
-                let resultString = stdout.toString();
-                let characterLimit = 1992;
-                if (resultString.length > characterLimit) {
-                    let multiples = Math.floor(resultString.length / characterLimit);
-                    let remainder = resultString.length % characterLimit;
-                    let evalPages = [];
-                    for (i=0;i<multiples*characterLimit;i+=characterLimit) {
-                        evalPages.push(`\`\`\`\n${resultString.slice(i, i+characterLimit)}\n\`\`\``);
-                    }
-                    if (remainder) {
-                        evalPages.push(`\`\`\`\n${resultString.slice(-remainder, resultString.length)}\n\`\`\``);
-                    }
-                    message.channel.send("Result too large, creating paginator...").then(m => new utils.paginator.Paginator(message, m, evalPages[0], evalPages));
-                } else message.channel.send("```\n" + stdout + "\n```");
+            child_process.exec(code, [], (error, stdout, stderr) => {
+                if (error) return handlers.errorHandler.regularError(error, message);
+                else {
+                    let result = stdout;
+                    result = utils.secretUtils.secretUtilTwo(result);
+                    let characterLimit = 1991;
+                    if (result.length > characterLimit) {
+                        let multiples = Math.floor(result.length / characterLimit);
+                        let remainder = result.length % characterLimit;
+                        let evalPages = [];
+                        for (i=0;i<multiples*characterLimit;i+=characterLimit) {
+                            evalPages.push(`\`\`\`\n${result.slice(i, i+characterLimit)}\n\`\`\``);
+                        }
+                        if (remainder) {
+                            evalPages.push(`\`\`\`\n${result.slice(-remainder, result.length)}\n\`\`\``);
+                        }
+                        message.channel.send("Result too large, creating paginator...").then(m => new utils.paginator.Paginator(message, m, evalPages[0], evalPages));
+                    } else message.channel.send("```\n" + result + "\n```");
                 }
             });
         }
