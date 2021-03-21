@@ -1,7 +1,5 @@
 const child_process = require("child_process");
-const utils = require("../../utils/utils");
-const handlers = require("../../handlers/handlers");
-const { owner, co_owners } = require("../../config").people;
+const { owner } = require("../../config").people;
 
 module.exports = {
     name: "bateval",
@@ -13,9 +11,9 @@ module.exports = {
                 code = code.slice(6, -3);
             }
             child_process.exec(code, [], (error, stdout, stderr) => {
-                if (error) return handlers.errorHandler.regularError(error, message);
+                if (error) return message.client.handlers.errorHandler.regularError(error, message);
                 else {
-                    let result = utils.secretUtils.secretUtilTwo(stdout);
+                    let result = message.client.utils.secretUtils.secretUtilTwo(stdout);
                     let characterLimit = 1991;
                     if (result.length > characterLimit) {
                         let multiples = Math.floor(result.length / characterLimit);
@@ -27,7 +25,7 @@ module.exports = {
                         if (remainder) {
                             evalPages.push(`\`\`\`\n${result.slice(-remainder, result.length)}\n\`\`\``);
                         }
-                        message.channel.send("Result too large, creating paginator...").then(m => new utils.paginator.Paginator(message, m, evalPages[0], evalPages));
+                        message.channel.send("Result too large, creating paginator...").then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
                     } else message.channel.send("```\n" + result + "\n```");
                 }
             });

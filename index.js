@@ -1,17 +1,14 @@
-const Discord = require("discord.js");
-const fs = require("fs");
+const { MrFactualClient } = require("./utils/client");
 const chalk = require("chalk");
-const utils = require("./utils/utils");
-const handlers = require("./handlers/handlers");
-const dotenv = require("dotenv");
-dotenv.config();
+require("dotenv").config();
 
-const client = new utils.client.MrFactualClient();
+const client = new MrFactualClient();
+console.log(client.handlers);
 
 client.once("ready", () => {
     console.log(chalk.greenBright("Mr. Factual is ready to go!"));
     client.user.setActivity("you learn", { type: "WATCHING" });
-    const databaseClient = new utils.database.Database();
+    const databaseClient = new client.utils.db.Database();
     client.databaseClient = databaseClient.client; // lol
 
     for (const command of client.slash) {
@@ -23,19 +20,19 @@ client.once("ready", () => {
 });
 
 client.ws.on("INTERACTION_CREATE", interaction => {
-    handlers.slashCommandHandler(interaction, client);
+    client.handlers.slashCommandHandler(interaction, client);
 });
 
-client.on("guildCreate", handlers.createdGuildHandler);
+client.on("guildCreate", client.handlers.createdGuildHandler);
 
 client.on("message", message => {
-    handlers.messageHandler(message);
+    client.handlers.messageHandler(message);
     module.exports = message;
 });
 
 process.on("unhandledRejection", error => {
     if (error.message == "Missing Permissions") {
-        handlers.errorHandler.missingPermissions(require("./index"));
+        client.handlers.errorHandler.missingPermissions(require("./index"));
     }
 });
 

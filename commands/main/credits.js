@@ -1,11 +1,10 @@
 const { owner, co_owners, inspiration_bot } = require("../../config").people;
-const utils = require("../../utils/utils");
 
 module.exports = {
     name: "credits",
     description: "View everyone who helped make me!",
     execute(message) {
-        const creditsEmbed = new utils.embeds.MrFactualEmbed()
+        const creditsEmbed = new message.client.utils.embeds.MrFactualEmbed()
         .setTitle("The people below helped make me!")
         .setDescription("Make sure to thank them!")
         .addFields(

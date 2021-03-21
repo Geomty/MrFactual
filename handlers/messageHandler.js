@@ -1,8 +1,7 @@
-const utils = require("../utils/utils")
 const { prefix } = require("../config");
 
 module.exports = async message => {
-    const result = await utils.database.Database.findDocument("prefixes", { serverID: message.guild.id });
+    const result = await message.client.utils.db.Database.findDocument("prefixes", { serverID: message.guild.id });
     let guildPrefix = (result) ? result.prefix : prefix;
 
     if (message.content == `<@!${message.client.user.id}>`) message.channel.send(`Hello! I noticed you pinged me! My prefix for this server is \`${guildPrefix}\`!`);

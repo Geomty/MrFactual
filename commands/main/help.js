@@ -1,12 +1,11 @@
 const fs = require("fs");
-const utils = require("../../utils/utils");
 const { prefix } = require("../../config");
 
 module.exports = {
     name: "help",
     description: "The help command, shows you a list of every command.",
     async execute(message) {
-        const result = await utils.database.Database.findDocument("prefixes", { serverID: message.guild.id });
+        const result = await message.client.utils.db.Database.findDocument("prefixes", { serverID: message.guild.id });
         let guildPrefix = (result) ? result.prefix : prefix;
 
         let embedDescription = "";
@@ -21,7 +20,7 @@ module.exports = {
                     const command = require(`../${folder}/${file}`);
                     embedDescription += `\n\n**${guildPrefix}${command.name} ${command.usage || ""}**\n${command.description}`;
                 }
-                const embed = new utils.embeds.MrFactualEmbed()
+                const embed = new message.client.utils.embeds.MrFactualEmbed()
                 .setTitle(folder.charAt(0).toUpperCase() + folder.slice(1) + " Commands")
                 .setDescription(embedDescription)
                 embed.category = folder;
@@ -33,7 +32,7 @@ module.exports = {
         embedsOrder = ["main", "fact", "management"];
         embeds.sort((a, b) => embedsOrder.indexOf(a.category) - embedsOrder.indexOf(b.category));
 
-        const helpEmbed = new utils.embeds.MrFactualEmbed()
+        const helpEmbed = new message.client.utils.embeds.MrFactualEmbed()
         .setColor("RANDOM")
         .setTitle("Hi, I'm Mr. Factual!")
         .setDescription(`I'm a bot/teacher just trying to make everyone a little smarter! My prefix for this server is \`${guildPrefix}\`.`)
@@ -48,6 +47,6 @@ module.exports = {
         }
         embeds.unshift(helpEmbed);
 
-        message.channel.send("Please wait...").then(m => new utils.paginator.Paginator(message, m, helpEmbed, embeds));
+        message.channel.send("Please wait...").then(m => new message.client.utils.paginator.Paginator(message, m, helpEmbed, embeds));
     }
 }

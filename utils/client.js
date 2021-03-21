@@ -18,10 +18,24 @@ class MrFactualClient extends Client {
         }
 
         this.slash = new Collection();
-        const commandFiles = fs.readdirSync("./commands/slash").filter(file => file.endsWith(".js"));
-        for (const file of commandFiles) {
-            const command = require(`../commands/slash/${file}`);
-            this.slash.set(command.json.name, command);
+        const slashCommandFiles = fs.readdirSync("./commands/slash").filter(file => file.endsWith(".js"));
+        for (const file of slashCommandFiles) {
+            const slashCommand = require(`../commands/slash/${file}`);
+            this.slash.set(slashCommand.json.name, slashCommand);
+        }
+
+        this.utils = {};
+        const utilFiles = fs.readdirSync(__dirname).filter(file => file.endsWith(".js"));
+        for (const file of utilFiles) {
+            const util = require(`./${file}`);
+            this.utils[file.slice(0, -3)] = util;
+        }
+
+        this.handlers = {};
+        const handlerFiles = fs.readdirSync("./handlers/").filter(file => file.endsWith(".js"));
+        for (const file of handlerFiles) {
+            const handler = require(`../handlers/${file}`);
+            this.handlers[file.slice(0, -3)] = handler;
         }
     }
 }

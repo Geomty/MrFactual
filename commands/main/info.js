@@ -1,5 +1,3 @@
-const Discord = require("discord.js");
-const utils = require("../../utils/utils")
 const { owner } = require("../../config").people;
 const packages = require("../../package").dependencies;
 
@@ -11,7 +9,7 @@ module.exports = {
         for (const package in packages) {
             infoMessage += `${package.charAt(0).toUpperCase() + package.slice(1)} v${packages[package].slice(1, packages[package].length)}\n`;
         }
-        const infoEmbed = new utils.embeds.MrFactualEmbed()
+        const infoEmbed = new message.client.utils.embeds.MrFactualEmbed()
         .setTitle("Free information about me!")
         .setDescription("Woohoo!")
         .addFields(
