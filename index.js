@@ -3,7 +3,6 @@ const chalk = require("chalk");
 require("dotenv").config();
 
 const client = new MrFactualClient();
-console.log(client.handlers);
 
 client.once("ready", () => {
     console.log(chalk.greenBright("Mr. Factual is ready to go!"));
