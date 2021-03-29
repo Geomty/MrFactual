@@ -1,5 +1,6 @@
 const embeds = require("../../utils/embeds");
 const http = require("../../utils/http");
+const { factEmbedTitle } = require("../../assets/constants");
 const { random_fact_apis } = require("../../config").api_urls;
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
         let data = await http.makeGetRequest(random_fact_apis[apiArray[num]].url);
         let fact = data[random_fact_apis[apiArray[num]].property].replace("`", "'"); // one of the apis are weird and puts ` instead of apostrophes
         const factEmbed = new embeds.MrFactualSlashEmbed({ dontIncludeThumbnail: true });
-        factEmbed.title = "Did you know...";
+        factEmbed.title = factEmbedTitle;
         factEmbed.description = fact;
         return {
             type: 4,

@@ -1,3 +1,4 @@
+const { jsCharacterLimit, evalPaginatorLoading } = require("../../assets/constants");
 const { owner, co_owners } = require("../../config").people;
 
 module.exports = {
@@ -15,18 +16,17 @@ module.exports = {
             if (result) {
                 resultString = result.toString();
             }
-            let characterLimit = 1992;
-            if (resultString && resultString.length > characterLimit) {
-                let multiples = Math.floor(resultString.length / characterLimit);
-                let remainder = resultString.length % characterLimit;
+            if (resultString && resultString.length > jsCharacterLimit) {
+                let multiples = Math.floor(resultString.length / jsCharacterLimit);
+                let remainder = resultString.length % jsCharacterLimit;
                 let evalPages = [];
-                for (i=0;i<multiples*characterLimit;i+=characterLimit) {
-                    evalPages.push(`\`\`\`\n${resultString.slice(i, i+characterLimit)}\n\`\`\``);
+                for (i=0;i<multiples*jsCharacterLimit;i+=jsCharacterLimit) {
+                    evalPages.push(`\`\`\`\n${resultString.slice(i, i+jsCharacterLimit)}\n\`\`\``);
                 }
                 if (remainder) {
                     evalPages.push(`\`\`\`\n${resultString.slice(-remainder, resultString.length)}\n\`\`\``);
                 }
-                message.channel.send("Result too large, creating paginator...").then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
+                message.channel.send(evalPaginatorLoading).then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
             } else message.channel.send("```\n" + result + "\n```");
         }
     }

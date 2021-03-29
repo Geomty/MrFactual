@@ -1,3 +1,5 @@
+const { reallyLeftArrow, leftArrow, rightArrow, reallyRightArrow, stopButton, paginatorClose } = require("../assets/constants");
+
 class Paginator {
     constructor(message, m, firstMessage, messagesArray) {
         this.message = message;
@@ -7,11 +9,11 @@ class Paginator {
         this.createPaginator();
     }
     async createPaginator() {
-        await this.m.react("⏪")
-        .then(await this.m.react("⬅"))
-        .then(await this.m.react("➡"))
-        .then(await this.m.react("⏩"))
-        .then(await this.m.react("⏹"))
+        await this.m.react(reallyLeftArrow)
+        .then(await this.m.react(leftArrow))
+        .then(await this.m.react(rightArrow))
+        .then(await this.m.react(reallyRightArrow))
+        .then(await this.m.react(stopButton))
         .then(this.m.edit(this.firstMessage))
         .then(this.m.edit(""));
         let page = 0;
@@ -22,21 +24,20 @@ class Paginator {
         collector.on("collect", reaction => {
             reaction.users.remove(this.message.author.id);
             switch (reaction.emoji.name) {
-                case "⏪":
+                case reallyLeftArrow:
                     page = 0;
                     break;
-                case "⬅":
+                case leftArrow:
                     page = (page != 0) ? page - 1 : page;
                     break;
-                case "➡":
+                case rightArrow:
                     page = (page != this.messagesArray.length - 1) ? page + 1 : page;
                     break;
-                case "⏩":
+                case reallyRightArrow:
                     page = this.messagesArray.length - 1;
                     break;
-               case "⏹":
+               case stopButton:
                     return this.deletePaginator(collector);
-                    break;
             }
             this.m.edit(this.messagesArray[page]);
         });
@@ -44,7 +45,7 @@ class Paginator {
     deletePaginator(collector) {
         collector.off("collect", () => {});
         this.m.reactions.removeAll();
-        this.m.edit("This menu has successfully been closed.");
+        this.m.edit(paginatorClose);
     }
 }
 

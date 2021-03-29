@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { commandCategoryOrder, defaultLoading } = require("../../assets/constants");
 const { prefix } = require("../../config");
 
 module.exports = {
@@ -29,7 +30,7 @@ module.exports = {
             }
         }
 
-        embedsOrder = ["main", "fact", "management"];
+        embedsOrder = commandCategoryOrder;
         embeds.sort((a, b) => embedsOrder.indexOf(a.category) - embedsOrder.indexOf(b.category));
 
         const helpEmbed = new message.client.utils.embeds.MrFactualEmbed()
@@ -47,6 +48,6 @@ module.exports = {
         }
         embeds.unshift(helpEmbed);
 
-        message.channel.send("Please wait...").then(m => new message.client.utils.paginator.Paginator(message, m, helpEmbed, embeds));
+        message.channel.send(defaultLoading).then(m => new message.client.utils.paginator.Paginator(message, m, helpEmbed, embeds));
     }
 }

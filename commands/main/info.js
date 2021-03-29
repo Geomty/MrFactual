@@ -1,3 +1,4 @@
+const { woohoo } = require("../../assets/constants");
 const { owner } = require("../../config").people;
 const packages = require("../../package").dependencies;
 
@@ -11,7 +12,7 @@ module.exports = {
         }
         const infoEmbed = new message.client.utils.embeds.MrFactualEmbed()
         .setTitle("Free information about me!")
-        .setDescription("Woohoo!")
+        .setDescription(woohoo)
         .addFields(
             { name: "Creator:", value: owner.tag },
             { name: "Stats:", value: `${message.client.guilds.cache.size} Servers\n${message.client.channels.cache.size} Channels\n${message.client.users.cache.size} Users` },

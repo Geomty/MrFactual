@@ -1,4 +1,5 @@
 const child_process = require("child_process");
+const { batCharacterLimit, evalPaginatorLoading } = require("../../assets/constants");
 const { owner } = require("../../config").people;
 
 module.exports = {
@@ -14,18 +15,17 @@ module.exports = {
                 if (error) return message.client.handlers.errorHandler.regularError(error, message);
                 else {
                     let result = message.client.utils.secretUtils.secretUtilTwo(stdout);
-                    let characterLimit = 1991;
-                    if (result.length > characterLimit) {
-                        let multiples = Math.floor(result.length / characterLimit);
-                        let remainder = result.length % characterLimit;
+                    if (result.length > batCharacterLimit) {
+                        let multiples = Math.floor(result.length / batCharacterLimit);
+                        let remainder = result.length % batCharacterLimit;
                         let evalPages = [];
-                        for (i=0;i<multiples*characterLimit;i+=characterLimit) {
-                            evalPages.push(`\`\`\`\n${result.slice(i, i+characterLimit)}\n\`\`\``);
+                        for (i=0;i<multiples*batCharacterLimit;i+=batCharacterLimit) {
+                            evalPages.push(`\`\`\`\n${result.slice(i, i+batCharacterLimit)}\n\`\`\``);
                         }
                         if (remainder) {
                             evalPages.push(`\`\`\`\n${result.slice(-remainder, result.length)}\n\`\`\``);
                         }
-                        message.channel.send("Result too large, creating paginator...").then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
+                        message.channel.send(evalPaginatorLoading).then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
                     } else message.channel.send("```\n" + result + "\n```");
                 }
             });

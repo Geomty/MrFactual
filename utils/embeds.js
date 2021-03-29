@@ -1,10 +1,11 @@
 const { MessageEmbed } = require("discord.js");
+const { embedFooter } = require("../assets/constants");
 
 class MrFactualEmbed extends MessageEmbed {
     constructor(options = {}) {
         super();
         this.setColor("RANDOM");
-        this.setFooter("Thanks for using me!");
+        this.setFooter(embedFooter);
         if (!options.dontIncludeThumbnail) {
             this.setThumbnail("https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualLogo.jpg");
         }
@@ -23,7 +24,7 @@ class MrFactualSlashEmbed {
     constructor(options = {}) {
         this.type = "rich";
         this.color = Math.floor(Math.random()*(0xffffff + 1));
-        this.footer = { text: "Thanks for using me!" };
+        this.footer = { text: embedFooter };
         if (!options.dontIncludeThumbnail) {
             this.thumbnail.url = "https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualLogo.jpg";
         }

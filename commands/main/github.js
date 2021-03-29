@@ -1,10 +1,11 @@
+const { infoLoading, woohoo } = require("../../assets/constants");
 const { github_api } = require("../../config").api_urls;
 
 module.exports = {
     name: "github",
     description: "View stats about my GitHub repository.",
     execute(message) {
-        message.channel.send("Fetching info...").then(async m => {
+        message.channel.send(infoLoading).then(async m => {
             const path = "/repos/Geomty/MrFactual";
             const githubData = await message.client.utils.http.makeGetRequest(github_api + path);
             if (githubData.message && githubData.message.includes("API rate limit exceeded")) {
@@ -24,22 +25,22 @@ module.exports = {
             let languageMessage = languageArray.join(", ");
             const branchData = await message.client.utils.http.makeGetRequest(github_api + path + "/branches");
             let branchMessage = 0;
-            for (const branch of branchData) {
+            for (const {} of branchData) {
                 branchMessage++;
             }
             const contentData = await message.client.utils.http.makeGetRequest(github_api + path + "/contents");
             let contentMessage = 0;
-            for (const content of contentData) {
+            for (const {} of contentData) {
                 contentMessage++;
             }
             const issueData = await message.client.utils.http.makeGetRequest(github_api + path + "/issues");
             let issueMessage = 0;
-            for (const issue of issueData) {
+            for (const {} of issueData) {
                 issueMessage++;
             }
             const pullData = await message.client.utils.http.makeGetRequest(github_api + path + "/pulls");
             let pullMessage = 0;
-            for (const pull of pullData) {
+            for (const {} of pullData) {
                 pullMessage++;
             }
             const commitData = await message.client.utils.http.makeGetRequest(github_api + path + "/commits");
@@ -47,7 +48,7 @@ module.exports = {
 
             const githubEmbed = new message.client.utils.embeds.MrFactualEmbed()
             .setTitle("Free information about my GitHub repository!")
-            .setDescription("Woohoo!")
+            .setDescription(woohoo)
             .addFields(
                 { name: "Link:", value: githubData.svn_url },
                 { name: "Name:", value: githubData.name },
