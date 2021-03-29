@@ -1,4 +1,4 @@
-const { MrFactualClient } = require("./utils/client");
+const { MrFactualClient } = require("./client/client");
 const chalk = require("chalk");
 require("dotenv").config();
 
