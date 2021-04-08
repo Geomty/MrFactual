@@ -1,4 +1,4 @@
-const { MrFactualClient } = require("./client/client");
+const MrFactualClient = require("./client/client");
 const chalk = require("chalk");
 require("dotenv").config();
 
@@ -7,7 +7,7 @@ const client = new MrFactualClient();
 client.once("ready", () => {
     console.log(chalk.greenBright("Mr. Factual is ready to go!"));
     client.user.setActivity("you learn", { type: "WATCHING" });
-    const databaseClient = new client.utils.db.Database();
+    const databaseClient = new client.db();
     client.databaseClient = databaseClient.client; // lol
 
     for (const command of client.slash) {

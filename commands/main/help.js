@@ -6,7 +6,7 @@ module.exports = {
     name: "help",
     description: "The help command, shows you a list of every command.",
     async execute(message) {
-        const result = await message.client.utils.db.Database.findDocument("prefixes", { serverID: message.guild.id });
+        const result = await message.client.db.findDocument("prefixes", { serverID: message.guild.id });
         let guildPrefix = (result) ? result.prefix : prefix;
 
         let embedDescription = "";

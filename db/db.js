@@ -3,7 +3,7 @@ const chalk = require("chalk");
 const { dbName } = require("../assets/constants");
 
 let client;
-class Database {
+module.exports = class Database {
     constructor() {
         client = new MongoClient(process.env.DATABASE_URL, { useUnifiedTopology: true });
         client.connect().then(() => {
@@ -40,5 +40,3 @@ class Database {
         return result;
     }
 }
-
-module.exports = { Database };

@@ -1,7 +1,7 @@
 const { Client, Collection } = require("discord.js");
 const fs = require("fs");
 
-class MrFactualClient extends Client {
+module.exports = class MrFactualClient extends Client {
     constructor() {
         super();
 
@@ -37,7 +37,7 @@ class MrFactualClient extends Client {
             const handler = require(`../handlers/${file}`);
             this.handlers[file.split(".")[0]] = handler;
         }
+
+        this.db = require("../db/db");
     }
 }
-
-module.exports = { MrFactualClient };
