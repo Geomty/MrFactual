@@ -9,17 +9,6 @@ client.once("ready", () => {
     client.user.setActivity("you learn", { type: "WATCHING" });
     const databaseClient = new client.db();
     client.databaseClient = databaseClient.client; // lol
-
-    for (const command of client.slash) {
-        client.api.applications(client.user.id).commands.post({
-            data: command[1].json
-        });
-    }
-    console.log(chalk.yellowBright("Slash commands are ready to go!"));
-});
-
-client.ws.on("INTERACTION_CREATE", interaction => {
-    client.handlers.slashCommandHandler(interaction, client);
 });
 
 client.on("guildCreate", client.handlers.createdGuildHandler);

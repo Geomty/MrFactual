@@ -10,7 +10,7 @@ module.exports = class Database {
             const db = client.db(dbName);
             const collection = db.collection("tests");
             collection.findOne({ isMongoReady: "MongoDB is ready to go!" }).then(result => {
-                console.log(chalk.magentaBright(result.isMongoReady));
+                console.log(chalk.yellowBright(result.isMongoReady));
             });
         });
         this.client = client;

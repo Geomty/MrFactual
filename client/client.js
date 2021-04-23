@@ -17,13 +17,6 @@ module.exports = class MrFactualClient extends Client {
             }
         }
 
-        this.slash = new Collection();
-        const slashCommandFiles = fs.readdirSync("./commands/slash/").filter(file => file.endsWith(".js"));
-        for (const file of slashCommandFiles) {
-            const slashCommand = require(`../commands/slash/${file}`);
-            this.slash.set(slashCommand.json.name, slashCommand);
-        }
-
         this.utils = {};
         const utilFiles = fs.readdirSync("./utils/").filter(file => file.endsWith(".js"));
         for (const file of utilFiles) {
