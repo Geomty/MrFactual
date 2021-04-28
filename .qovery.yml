@@ -1,0 +1,11 @@
+---
+application:
+  name: "mrfactual"
+  project: "Mr. Factual"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-mrfactual"
+  routes:
+  - application_name: "mrfactual"
+    paths:
+    - "/*"
