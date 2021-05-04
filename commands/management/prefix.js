@@ -5,7 +5,7 @@ module.exports = {
     description: "Set a custom prefix. Put `--` at the end of your new prefix to represent a space.",
     usage: "<new prefix (optional)>",
     async execute(message, args) {
-        if (!message.member.permissions.has(32)) {
+        /*if (!message.member.permissions.has(32)) {
             return message.channel.send("You need the `MANAGE_SERVER` permission to change my prefix!");
         }
         if (args[0]) {
@@ -29,6 +29,7 @@ module.exports = {
             } else {
                 message.channel.send(`Successfully reset prefix to \`${prefix}\`!`);
             }
-        }
+        }*/
+        message.channel.send("The prefix command has been temporarily disabled. Sorry for the inconvenience.");
     }
 }
