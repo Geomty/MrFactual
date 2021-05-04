@@ -1,4 +1,4 @@
-const { prefix } = require("../config");
+const { prefix } = require("../assets/constants");
 
 module.exports = async message => {
     //const result = await message.client.db.findDocument("prefixes", { serverID: message.guild.id });

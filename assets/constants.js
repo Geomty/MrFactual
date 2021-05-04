@@ -1,6 +1,6 @@
 module.exports = {
     profilePicture: "https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualLogo.jpg",
-    prefix: "f.",
+    prefix: (process.env.BETA == "true") ? "f.." : "f.",
 
     batCharacterLimit: 1991,
     jsCharacterLimit: 1992,

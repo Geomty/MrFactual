@@ -24,4 +24,8 @@ process.on("unhandledRejection", error => {
     }
 });
 
-client.login(process.env.TOKEN);
+if (process.env.BETA == "true") {
+    client.login(process.env.BETA_TOKEN);
+} else {
+    client.login(process.env.MRFACTUAL_TOKEN);
+}

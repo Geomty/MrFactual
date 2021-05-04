@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { commandCategoryOrder, defaultLoading } = require("../../assets/constants");
-const { prefix } = require("../../config");
+const { prefix } = require("../../assets/constants");
 
 module.exports = {
     name: "help",
