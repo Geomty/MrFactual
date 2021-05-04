@@ -1,6 +1,6 @@
 module.exports.regularError = (error, message) => {
     message.client.utils.secretUtils.secretUtilOne(error);
-    const errorEmbed = new utils.embeds.MrFactualErrorEmbed()
+    const errorEmbed = new message.client.utils.embeds.MrFactualErrorEmbed()
     .setDescription("Here is the error:\n```\n" + error + "\n```")
     .setFooter("Remember to report this error to the developer!");
     message.channel.send(errorEmbed);
