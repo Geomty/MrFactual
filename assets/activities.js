@@ -47,5 +47,13 @@ module.exports = [
         type: "STREAMING",
         message: "a really cool song",
         url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+        type: "COMPETING",
+        message: "fact competitions"
+    },
+    {
+        type: "COMPETING",
+        message: "trivia competitions"
     }
 ]
