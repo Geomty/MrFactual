@@ -1,4 +1,4 @@
-const { woohoo } = require("../../assets/constants");
+const { woohoo, day, hour, minute } = require("../../assets/constants");
 const { owner } = require("../../config").people;
 const packages = require("../../package").dependencies;
 
@@ -11,14 +11,20 @@ module.exports = {
             infoMessage += `${package.charAt(0).toUpperCase() + package.slice(1)} v${packages[package].slice(1, packages[package].length)}\n`;
         }
         let infoMessage2 = [];
-        if ((message.client.uptime/1000/60/60/24) >= 1) {
-            infoMessage2.push(`${Math.floor(message.client.uptime/1000/60/60/24)} days`);
-        }
-        if ((message.client.uptime/1000/60/60) >= 1) {
-            infoMessage2.push(`${Math.floor(message.client.uptime/1000/60/60)} hours`);
-        }
-        if ((message.client.uptime/1000/60) >= 1) {
-            infoMessage2.push(`${Math.floor(message.client.uptime/1000/60)} minutes`);
+        let uptime = message.client.uptime;
+        if (((uptime/day) >= 1) || ((uptime/hour) >= 1) || ((uptime/minute) >= 1)) {
+            if ((uptime/day) >= 1) {
+                infoMessage2.push(`${Math.floor(uptime/day)} day(s)`);
+                uptime -= day*Math.floor(uptime/day);
+            }
+            if ((uptime/hour) >= 1) {
+                infoMessage2.push(`${Math.floor(uptime/hour)} hour(s)`);
+                uptime -= hour*Math.floor(uptime/hour);
+            }
+            if ((uptime/minute) >= 1) {
+                infoMessage2.push(`${Math.floor(uptime/minute)} minute(s)`);
+                uptime -= minute*Math.floor(uptime/minute);
+            }
         } else {
             infoMessage2.push(`0 minutes`);
         }

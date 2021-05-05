@@ -11,6 +11,9 @@ module.exports = {
 
     defaultLoading: "Please wait...",
     infoLoading: "Fetching info...",
+    day: 1000*60*60*24,
+    hour: 1000*60*60,
+    minute: 1000*60,
     commandCategoryOrder: ["main", "fact", "management"],
     woohoo: "Woohoo!",
 
