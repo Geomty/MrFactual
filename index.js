@@ -21,8 +21,8 @@ client.once("ready", () => {
             client.user.setActivity(activity.message, { type: activity.type });
         }
     }, 20000);
-    /*const databaseClient = new client.db();
-    client.databaseClient = databaseClient.client;*/ // lol
+    const databaseClient = new client.db();
+    client.databaseClient = databaseClient.client; // lol
 });
 
 client.on("guildCreate", client.handlers.createdGuildHandler);

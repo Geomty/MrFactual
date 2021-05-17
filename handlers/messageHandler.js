@@ -1,8 +1,8 @@
 const { prefix } = require("../assets/constants");
 
 module.exports = async message => {
-    //const result = await message.client.db.findDocument("prefixes", { serverID: message.guild.id });
-    let guildPrefix = /*(result) ? result.prefix :*/ prefix;
+    const result = await message.client.db.findDocument("prefixes", { serverID: message.guild.id });
+    let guildPrefix = (result) ? result.prefix : prefix;
 
     if (message.content == `<@!${message.client.user.id}>`) message.channel.send(`Hello! I noticed you pinged me! My prefix for this server is \`${guildPrefix}\`!`);
     if (!message.content.startsWith(guildPrefix) || message.author.bot || message.channel.type == "dm") return;

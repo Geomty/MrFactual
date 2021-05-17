@@ -1,13 +1,12 @@
 const fs = require("fs");
-const { commandCategoryOrder, defaultLoading } = require("../../assets/constants");
-const { prefix } = require("../../assets/constants");
+const { prefix, commandCategoryOrder, defaultLoading } = require("../../assets/constants");
 
 module.exports = {
     name: "help",
     description: "The help command, shows you a list of every command.",
     async execute(message) {
-        //const result = await message.client.db.findDocument("prefixes", { serverID: message.guild.id });
-        let guildPrefix = /*(result) ? result.prefix :*/ prefix;
+        const result = await message.client.db.findDocument("prefixes", { serverID: message.guild.id });
+        let guildPrefix = (result) ? result.prefix : prefix;
 
         let embedDescription = "";
         let embeds = [];
