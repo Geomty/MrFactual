@@ -6,7 +6,7 @@ module.exports = {
     jsCharacterLimit: 1992,
     evalPaginatorLoading: "Result too large, creating paginator...",
 
-    factLoading: "Retriving a fact...",
+    factLoading: "Retrieving a fact...",
     factEmbedTitle: "Did you know...",
 
     defaultLoading: "Please wait...",
