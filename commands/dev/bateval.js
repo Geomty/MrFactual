@@ -1,5 +1,5 @@
 const child_process = require("child_process");
-const { batCharacterLimit, evalPaginatorLoading } = require("../../assets/constants");
+const { batCharacterLimit } = require("../../assets/constants");
 const { owner } = require("../../config").people;
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
                         if (remainder) {
                             evalPages.push(`\`\`\`\n${result.slice(-remainder, result.length)}\n\`\`\``);
                         }
-                        message.channel.send(evalPaginatorLoading).then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
+                        new message.client.utils.paginator.Paginator(message, evalPages);
                     } else message.channel.send("```\n" + result + "\n```");
                 }
             });

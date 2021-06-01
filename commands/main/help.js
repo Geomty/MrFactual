@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { prefix, commandCategoryOrder, defaultLoading } = require("../../assets/constants");
+const { prefix, commandCategoryOrder } = require("../../assets/constants");
 
 module.exports = {
     name: "help",
@@ -29,11 +29,9 @@ module.exports = {
             }
         }
 
-        embedsOrder = commandCategoryOrder;
-        embeds.sort((a, b) => embedsOrder.indexOf(a.category) - embedsOrder.indexOf(b.category));
+        embeds.sort((a, b) => commandCategoryOrder.indexOf(a.category) - commandCategoryOrder.indexOf(b.category));
 
         const helpEmbed = new message.client.utils.embeds.MrFactualEmbed()
-        .setColor("RANDOM")
         .setTitle("Hi, I'm Mr. Factual!")
         .setDescription(`I'm a bot/teacher just trying to make everyone a little smarter! My prefix for this server is \`${guildPrefix}\`.`)
         .addFields(
@@ -47,6 +45,6 @@ module.exports = {
         }
         embeds.unshift(helpEmbed);
 
-        message.channel.send(defaultLoading).then(m => new message.client.utils.paginator.Paginator(message, m, helpEmbed, embeds));
+        new message.client.utils.paginator.Paginator(message, embeds);
     }
 }

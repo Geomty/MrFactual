@@ -1,4 +1,4 @@
-const { jsCharacterLimit, evalPaginatorLoading } = require("../../assets/constants");
+const { jsCharacterLimit } = require("../../assets/constants");
 const { owner, co_owners } = require("../../config").people;
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
                 if (remainder) {
                     evalPages.push(`\`\`\`\n${resultString.slice(-remainder, resultString.length)}\n\`\`\``);
                 }
-                message.channel.send(evalPaginatorLoading).then(m => new message.client.utils.paginator.Paginator(message, m, evalPages[0], evalPages));
+                new message.client.utils.paginator.Paginator(message, evalPages);
             } else message.channel.send("```\n" + result + "\n```");
         }
     }
