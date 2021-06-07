@@ -2,6 +2,11 @@ const fetch = require("node-fetch");
 
 module.exports.makeGetRequest = async url => {
     const res = await fetch(url);
-    const data = await res.json();
+    let data;
+    try {
+        data = await res.json();
+    } catch {
+        return res;
+    }
     return data;
 }
