@@ -5,6 +5,7 @@ module.exports = {
     batCharacterLimit: 1991,
     jsCharacterLimit: 1992,
 
+    factQuestion: "What type of categoryType would you like to learn about?",
     factLoading: "Retrieving a fact...",
     factEmbedTitle: "Did you know...",
 

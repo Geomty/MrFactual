@@ -13,7 +13,7 @@ module.exports = {
 
         const commandFolders = fs.readdirSync("./commands/");
         for (const folder of commandFolders) {
-            if (folder != "dev" && folder != "slash") {
+            if (folder != "dev") {
                 embedDescription += ` Here are all the commands in the ${folder} category:`;
                 const commandFiles = fs.readdirSync(`./commands/${folder}/`).filter(file => file.endsWith(".js"));
                 for (const file of commandFiles) {

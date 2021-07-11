@@ -53,7 +53,7 @@ class Paginator {
     changeThePage() {
         let page = 0;
         this.message.client.ws.on("INTERACTION_CREATE", interaction => {
-            if (interaction.message.id == this.m.id && interaction.member.user.id == this.message.author.id) {
+            if (interaction.data.component_type == 2 && interaction.message.id == this.m.id && interaction.member.user.id == this.message.author.id) {
                 switch (interaction.data.custom_id) {
                     case "first_page":
                         page = 0;
