@@ -38,7 +38,7 @@ module.exports = {
             { name: "Packages used:", value: infoMessage },
             { name: "Uptime:", value: infoMessage2.join(", ") },
             { name: "Links:", value: "Invite link: [Click here](https://discord.com/oauth2/authorize?client_id=812869459374243872&permissions=379968&scope=bot)\nSupport server: [Click here](https://discord.gg/yXkB68EA8S)\nGitHub repository: [Click here](https://github.com/Geomty/MrFactual)" },
-            { name: "Created on:", value: message.client.user.createdAt }
+            { name: "Created on:", value: message.client.user.createdAt.toString() }
         )
         message.channel.send({ embeds: [infoEmbed] });
     }
