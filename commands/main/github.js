@@ -67,7 +67,7 @@ module.exports = {
                 { name: "Most recent commit:", value: commitMessage },
                 { name: "License:", value: githubData.license.name }
             )
-            m.edit(githubEmbed);
+            m.edit({ embeds: [githubEmbed] });
             m.edit("");
         });
     }

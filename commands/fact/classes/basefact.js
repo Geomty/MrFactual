@@ -29,7 +29,7 @@ class FactCommand {
                 const image = await this.imageFunction(dataTwo, image_apis);
                 factEmbed.setImage(image);
             }
-            m.edit(factEmbed);
+            m.edit({ embeds: [factEmbed] });
             m.edit("");
         });
     }

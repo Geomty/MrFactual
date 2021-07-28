@@ -16,7 +16,7 @@ module.exports = {
         .setTitle("A new suggestion has popped up!")
         .setDescription(args.join(" "))
         .setTimestamp();
-        channel.send(suggestEmbed);
+        channel.send({ embeds: [suggestEmbed] });
         message.channel.send("Your suggestion has been sent to the developers! Maybe it'll get approved, I don't know!");
     }
 }

@@ -27,10 +27,7 @@ client.once("ready", () => {
 
 client.on("guildCreate", client.handlers.createdGuildHandler);
 
-// discord.js where is v13 already
-// client.on("threadCreate", client.handlers.createdThreadHandler);
-
-client.on("message", message => {
+client.on("messageCreate", message => {
     client.handlers.messageHandler(message);
     module.exports = message;
 });

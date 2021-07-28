@@ -5,7 +5,7 @@ module.exports = async message => {
     let guildPrefix = (result) ? result.prefix : prefix;
 
     if (message.content == `<@!${message.client.user.id}>`) message.channel.send(`Hello! I noticed you pinged me! My prefix for this server is \`${guildPrefix}\`!`);
-    if (!message.content.startsWith(guildPrefix) || message.author.bot || message.channel.type == "dm"/* || message.type == "THREAD_CREATED"*/) return;
+    if (!message.content.startsWith(guildPrefix) || message.author.bot || message.type == "THREAD_CREATED") return;
 
     const args = message.content.slice(guildPrefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();

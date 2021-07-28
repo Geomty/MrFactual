@@ -7,7 +7,7 @@ module.exports = {
             const pingEmbed = new message.client.utils.embeds.MrFactualEmbed({ dontIncludeThumbnail: true })
             .setTitle("Pong! :ping_pong:")
             .setDescription(`Bot Latency: ${ping}ms\nAPI Latency: ${message.client.ws.ping}ms`)
-            m.edit(pingEmbed);
+            m.edit({ embeds: [pingEmbed] });
             m.edit("");
         });
     }

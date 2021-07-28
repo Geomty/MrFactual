@@ -12,6 +12,6 @@ module.exports = {
             { name: "Inspiration for my name:", value: co_owners.first.tag },
             { name: "Inspiration for my purpose:", value: `${inspiration_bot.tag} by ${co_owners.second.tag}` }
         )
-        message.channel.send(creditsEmbed);
+        message.channel.send({ embeds: [creditsEmbed] });
     }
 }

@@ -1,3 +1,4 @@
+const Discord = require("discord.js")
 const fs = require("fs");
 const { factQuestion } = require("../../../assets/constants");
 
@@ -10,48 +11,36 @@ class FactCategory {
     async execute(message) {
         let responseData = {
             content: factQuestion.replace("categoryType", this.categoryType),
-            components: [
-                {
-                    type: 1,
-                    components: [
-                        {
-                            type: 3,
-                            custom_id: "selectMenu",
-                            options: []
-                        }
-                    ]
-                }
-            ]
+            components: [new Discord.MessageActionRow().addComponents(
+                new Discord.MessageSelectMenu()
+                .setCustomId("selectMenu")
+                .setPlaceholder("Click here to choose")
+            )]
         };
         for (const file of fs.readdirSync(`./commands/fact/${this.categoryType}/`)) {
             const fact = require(`../${this.categoryType}/${file}`);
             const lowercase = fact.name.slice(0, fact.name.indexOf("fact"));
-            responseData.components[0].components[0].options.push({
+            responseData.components[0].components[0].addOptions({
                 label: lowercase.charAt(0).toUpperCase() + lowercase.slice(1),
                 value: lowercase,
                 description: fact.description
             });
         }
-        const m = await message.client.api.channels(message.channel.id).messages.post({
-            data: responseData
-        });
-        message.client.ws.on("INTERACTION_CREATE", interaction => {
-            if (interaction.data.component_type == 3 && interaction.message.id == m.id && interaction.member.user.id == message.author.id) {
-                const selection = interaction.data.values[0];
-                message.client.api.interactions(interaction.id, interaction.token).callback.post({
-                    data: {
-                        type: 4,
-                        data: {
-                            content: `${selection.charAt(0).toUpperCase() + selection.slice(1)} it is!`
-                        }
-                    }
-                }).then(() => require(`../${this.categoryType}/${selection}fact`).execute(message)).then(async () => {
-                    let editData = responseData;
-                    editData.components[0].components[0].disabled = true;
-                    await message.client.api.channels(message.channel.id).messages(m.id).patch({
-                        data: editData
+        const m = await message.channel.send(responseData);
+        message.client.on("interaction", interaction => {
+            if (interaction.componentType == "SELECT_MENU" && interaction.message.id == m.id) {
+                if (interaction.user.id == message.author.id) {
+                    const selection = interaction.values[0];
+                    interaction.reply(`${selection.charAt(0).toUpperCase() + selection.slice(1)} it is!`)
+                    .then(() => require(`../${this.categoryType}/${selection}fact`).execute(message))
+                    .then(async () => {
+                        let editData = responseData;
+                        editData.components[0].components[0].setDisabled(true);
+                        await message.client.api.channels(message.channel.id).messages(m.id).patch({ // for some reason i can't use interaction.reply() and interaction.update() on the same interaction
+                            data: editData
+                        });
                     });
-                });
+                } else interaction.reply({ content: "Sorry, but this isn't your select menu.", ephemeral: true });
             }
         });
     }

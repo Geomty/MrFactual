@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const { paginatorClose } = require("../assets/constants");
 
 class Paginator {
@@ -7,88 +8,79 @@ class Paginator {
         this.createPaginator();
     }
     createPaginator() {
-        let responseData = {
-            components: [
-                {
-                    type: 1,
-                    components: [
-                        {
-                            type: 2,
-                            label: "First page",
-                            style: 3,
-                            custom_id: "first_page"
-                        },
-                        {
-                            type: 2,
-                            label: "Previous page",
-                            style: 1,
-                            custom_id: "previous_page"
-                        },
-                        {
-                            type: 2,
-                            label: "Next page",
-                            style: 1,
-                            custom_id: "next_page"
-                        },
-                        {
-                            type: 2,
-                            label: "Last page",
-                            style: 3,
-                            custom_id: "last_page"
-                        }/*,
-                        {
-                            type: 2,
-                            label: "Stop",
-                            style: 4,
-                            custom_id: "stop"
-                        }*/
-                    ]
-                }
-            ]
+        let responseData = this.baseData = {
+            components: [new Discord.MessageActionRow().addComponents([
+                new Discord.MessageButton()
+                .setLabel("First page")
+                .setStyle("SUCCESS")
+                .setCustomId("first_page"),
+
+                new Discord.MessageButton()
+                .setLabel("Previous page")
+                .setStyle("PRIMARY")
+                .setCustomId("previous_page"),
+
+                new Discord.MessageButton()
+                .setLabel("Next page")
+                .setStyle("PRIMARY")
+                .setCustomId("next_page"),
+
+                new Discord.MessageButton()
+                .setLabel("Last page")
+                .setStyle("SUCCESS")
+                .setCustomId("last_page"),
+
+                new Discord.MessageButton()
+                .setLabel("Stop")
+                .setStyle("DANGER")
+                .setCustomId("stop")
+            ])]
         }
         this.stringOrEmbed(responseData, this.pages[0]);
-        this.message.client.api.channels(this.message.channel.id).messages.post({ data: responseData }).then(m => this.m = m);
+        this.message.channel.send(responseData).then(m => this.m = m);
         this.changeThePage();
     }
     changeThePage() {
         let page = 0;
-        this.message.client.ws.on("INTERACTION_CREATE", interaction => {
-            if (interaction.data.component_type == 2 && interaction.message.id == this.m.id && interaction.member.user.id == this.message.author.id) {
-                switch (interaction.data.custom_id) {
-                    case "first_page":
-                        page = 0;
-                        break;
-                    case "previous_page":
-                        page = (page != 0) ? page - 1 : page;
-                        break;
-                    case "next_page":
-                        page = (page != this.pages.length - 1) ? page + 1 : page;
-                        break;
-                    case "last_page":
-                        page = this.pages.length - 1;
-                        break;
-                    /*case "stopButton":
-                        return this.deletePaginator();*/
-                }
-                let editData = { type: 7, data: {} };
-                this.stringOrEmbed(editData.data, this.pages[page], true);
-                this.message.client.api.interactions(interaction.id, interaction.token).callback.post({ data: editData });
+        this.message.client.on("interaction", interaction => {
+            if (interaction.componentType == "BUTTON" && interaction.message.id == this.m.id) {
+                if (interaction.user.id == this.message.author.id) {
+                    switch (interaction.customId) {
+                        case "first_page":
+                            page = 0;
+                            break;
+                        case "previous_page":
+                            page = (page != 0) ? page - 1 : page;
+                            break;
+                        case "next_page":
+                            page = (page != this.pages.length - 1) ? page + 1 : page;
+                            break;
+                        case "last_page":
+                            page = this.pages.length - 1;
+                            break;
+                        case "stop":
+                            return this.deletePaginator(interaction);
+                    }
+                    let editData = this.baseData;
+                    this.stringOrEmbed(editData, this.pages[page]);
+                    interaction.update(editData);
+                } else interaction.reply({ content: "Sorry, but this is not your menu.", ephemeral: true });
             }
         });
     }
-    deletePaginator() {
-        // to be continued once discord updates their documentation and tells me how to edit buttons
+    deletePaginator(interaction) {
+        let editData = this.baseData;
+        for (let i=0;i<editData.components[0].components.length;i++) {
+            editData.components[0].components[i].setDisabled(true);
+        }
+        editData.content = paginatorClose;
+        interaction.update(editData);
     }
-    stringOrEmbed(object, content, edit) {
+    stringOrEmbed(object, content) {
         if (typeof content == "string") {
             object.content = content;
         } else {
-            let json = content.toJSON();
-            if (edit) {
-                object.embeds = [json];
-            } else {
-                object.embed = json;
-            }
+            object.embeds = [content];
         }
     }
 }

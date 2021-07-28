@@ -1,9 +1,9 @@
-const { Client, Collection } = require("discord.js");
+const { Client, Collection, Intents } = require("discord.js");
 const fs = require("fs");
 
 module.exports = class MrFactualClient extends Client {
     constructor() {
-        super();
+        super({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
         this.commands = new Collection();
         const commandFolders = fs.readdirSync("./commands/");
