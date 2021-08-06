@@ -1,3 +1,4 @@
+const { Permissions } = require("discord.js");
 const { woohoo, day, hour, minute } = require("../../assets/constants");
 const { owner } = require("../../config").people;
 const packages = require("../../package").dependencies;
@@ -6,6 +7,7 @@ module.exports = {
     name: "info",
     description: "This command shows detailed information about me.",
     execute(message) {
+        const perms = Permissions.FLAGS;
         let infoMessage = "";
         for (const package in packages) {
             infoMessage += `${package.charAt(0).toUpperCase() + package.slice(1)} v${packages[package].slice(1, packages[package].length)}\n`;
@@ -37,7 +39,18 @@ module.exports = {
             { name: "Programs used:", value: `Node.js ${process.version}` },
             { name: "Packages used:", value: infoMessage },
             { name: "Uptime:", value: infoMessage2.join(", ") },
-            { name: "Links:", value: "Invite link: [Click here](https://discord.com/oauth2/authorize?client_id=812869459374243872&permissions=379968&scope=bot)\nSupport server: [Click here](https://discord.gg/yXkB68EA8S)\nGitHub repository: [Click here](https://github.com/Geomty/MrFactual)" },
+            { name: "Links:", value: `Invite link: [Click here](${message.client.generateInvite({
+                scopes: ["bot"],
+                permissions: [
+                    perms.VIEW_CHANNEL,
+                    perms.SEND_MESSAGES,
+                    perms.EMBED_LINKS,
+                    perms.ATTACH_FILES,
+                    perms.READ_MESSAGE_HISTORY,
+                    perms.USE_EXTERNAL_EMOJIS,
+                    perms.ADD_REACTIONS
+                ]
+            })})\nSupport server: [Click here](https://discord.gg/yXkB68EA8S)\nGitHub repository: [Click here](https://github.com/Geomty/MrFactual)` },
             { name: "Created on:", value: message.client.user.createdAt.toString() }
         )
         message.channel.send({ embeds: [infoEmbed] });

@@ -27,7 +27,7 @@ class FactCategory {
             });
         }
         const m = await message.channel.send(responseData);
-        message.client.on("interaction", interaction => {
+        message.client.on("interactionCreate", interaction => {
             if (interaction.componentType == "SELECT_MENU" && interaction.message.id == m.id) {
                 if (interaction.user.id == message.author.id) {
                     const selection = interaction.values[0];

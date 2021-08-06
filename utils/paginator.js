@@ -42,7 +42,7 @@ class Paginator {
     }
     changeThePage() {
         let page = 0;
-        this.message.client.on("interaction", interaction => {
+        this.message.client.on("interactionCreate", interaction => {
             if (interaction.componentType == "BUTTON" && interaction.message.id == this.m.id) {
                 if (interaction.user.id == this.message.author.id) {
                     switch (interaction.customId) {

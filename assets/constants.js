@@ -7,9 +7,7 @@ module.exports = {
 
     factQuestion: "What type of categoryType would you like to learn about?",
     factLoading: "Retrieving a fact...",
-    factEmbedTitle: "Did you know...",
 
-    infoLoading: "Fetching info...",
     day: 1000*60*60*24,
     hour: 1000*60*60,
     minute: 1000*60,

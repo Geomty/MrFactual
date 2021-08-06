@@ -1,7 +1,11 @@
 const fetch = require("node-fetch");
 
-module.exports.makeGetRequest = async url => {
-    const res = await fetch(url);
+module.exports.makeGetRequest = async (url, github_api_token) => {
+    const res = await fetch(url, {
+        headers: github_api_token ? {
+            "Authorization": `token ${github_api_token}`
+        } : {}
+    });
     let data;
     try {
         data = await res.json();
