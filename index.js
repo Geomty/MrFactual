@@ -27,4 +27,8 @@ client.on("interactionCreate", interaction => {
     if (interaction.isCommand()) client.commands.get(interaction.commandName).execute(interaction);
 });
 
-client.login(process.env.BETA ? process.env.BETA_TOKEN : process.env.MRFACTUAL_TOKEN);
+if (process.env.BETA == "true") {
+    client.login(process.env.BETA_TOKEN);
+} else {
+    client.login(process.env.MRFACTUAL_TOKEN);
+}
