@@ -11,7 +11,7 @@ const commands = makeCommandCollection().toJSON().map(command => {
 });
 
 console.log(chalk.yellow("Deploying slash commands..."));
-if (process.env.BETA) {
+if (process.env.BETA == true) {
     const rest = new REST({ version: "10" }).setToken(process.env.BETA_TOKEN);
     rest.put(Routes.applicationGuildCommands("839123675646525493", server), { body: commands }).then(() => {
         console.log(chalk.green(`Sucessfully deployed slash commands to server id ${server}!`));
