@@ -67,6 +67,7 @@ module.exports = {
             { name: "Most recent commit:", value: commitMessage },
             { name: "License:", value: githubData.license.name }
         )
+        .setFooter({ text: "This message is ephemeral because of how much space it takes up" })
         interaction.editReply({ embeds: [githubEmbed] });
     }
 }
