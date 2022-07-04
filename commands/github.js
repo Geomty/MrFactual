@@ -1,52 +1,52 @@
-const { woohoo } = require("../../assets/constants");
-const { url, token } = require("../../config").api_urls.github_api;
+const { woohoo } = require("../assets/constants");
+const { url, token } = require("../config").api_urls.github_api;
 
 module.exports = {
     name: "github",
     description: "View stats about my GitHub repository.",
-    async execute(message) {
-        message.channel.sendTyping();
+    async execute(interaction) {
+        interaction.deferReply();
         const path = "/repos/Geomty/MrFactual";
-        const githubData = await message.client.utils.http.makeGetRequest(url + path, token);
+        const githubData = await interaction.client.utils.http.makeGetRequest(url + path, token);
         if (githubData.message && githubData.message.includes("API rate limit exceeded")) {
-            return message.channel.send("Uh oh, I've been rate limited from GitHub's API. Try again in a few minutes.");
+            return interaction.editReply("Uh oh, I've been rate limited from GitHub's API. Try again in a few minutes.");
         }
-        const contributorData = await message.client.utils.http.makeGetRequest(url + path + "/contributors", token);
+        const contributorData = await interaction.client.utils.http.makeGetRequest(url + path + "/contributors", token);
         let contributorArray = [];
         for (const contributor of contributorData) {
             contributorArray.push(`${contributor.login} (${contributor.contributions} contributions)`);
         }
         let contributorMessage = contributorArray.join(", ");
-        const languageData = await message.client.utils.http.makeGetRequest(url + path + "/languages", token);
+        const languageData = await interaction.client.utils.http.makeGetRequest(url + path + "/languages", token);
         let languageArray = [];
         for (const language in languageData) {
             languageArray.push(`${language} (${languageData[language]} bytes of code)`);
         }
         let languageMessage = languageArray.join(", ");
-        const branchData = await message.client.utils.http.makeGetRequest(url + path + "/branches", token);
+        const branchData = await interaction.client.utils.http.makeGetRequest(url + path + "/branches", token);
         let branchMessage = 0;
         for (const {} of branchData) {
             branchMessage++;
         }
-        const contentData = await message.client.utils.http.makeGetRequest(url + path + "/contents", token);
+        const contentData = await interaction.client.utils.http.makeGetRequest(url + path + "/contents", token);
         let contentMessage = 0;
         for (const {} of contentData) {
             contentMessage++;
         }
-        const issueData = await message.client.utils.http.makeGetRequest(url + path + "/issues", token);
+        const issueData = await interaction.client.utils.http.makeGetRequest(url + path + "/issues", token);
         let issueMessage = 0;
         for (const {} of issueData) {
             issueMessage++;
         }
-        const pullData = await message.client.utils.http.makeGetRequest(url + path + "/pulls", token);
+        const pullData = await interaction.client.utils.http.makeGetRequest(url + path + "/pulls", token);
         let pullMessage = 0;
         for (const {} of pullData) {
             pullMessage++;
         }
-        const commitData = await message.client.utils.http.makeGetRequest(url + path + "/commits");
+        const commitData = await interaction.client.utils.http.makeGetRequest(url + path + "/commits");
         let commitMessage = `"${commitData[0].commit.message}" by ${commitData[0].commit.author.name} on ${new Date(commitData[0].commit.author.date)}`;
 
-        const githubEmbed = new message.client.utils.embeds.MrFactualEmbed()
+        const githubEmbed = new interaction.client.utils.embeds.MrFactualEmbed()
         .setTitle("Free information about my GitHub repository!")
         .setDescription(woohoo)
         .addFields(
@@ -67,6 +67,6 @@ module.exports = {
             { name: "Most recent commit:", value: commitMessage },
             { name: "License:", value: githubData.license.name }
         )
-        message.channel.send({ embeds: [githubEmbed] });
+        interaction.editReply({ embeds: [githubEmbed] });
     }
 }

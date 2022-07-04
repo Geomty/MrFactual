@@ -1,12 +1,12 @@
 module.exports = {
     profilePicture: "https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualLogo.jpg",
-    prefix: process.env.BETA == "true" ? "f.." : "f.",
 
     batCharacterLimit: 1991,
     jsCharacterLimit: 1992,
 
     factQuestion: "What type of categoryType would you like to learn about?",
     factLoading: "Retrieving a fact...",
+    factEmbedTitle: "Did you know...",
 
     day: 1000*60*60*24,
     hour: 1000*60*60,

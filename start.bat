@@ -1,6 +1,5 @@
 @echo off
 title Mr. Factual
-color b
+color 9
 echo Starting Mr. Factual...
-@echo on
 node .

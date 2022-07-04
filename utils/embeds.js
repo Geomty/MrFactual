@@ -5,7 +5,7 @@ class MrFactualEmbed extends MessageEmbed {
     constructor(options = {}) {
         super();
         this.setColor("RANDOM");
-        this.setFooter(embedFooter);
+        this.setFooter({ text: embedFooter });
         if (!options.dontIncludeThumbnail) {
             this.setThumbnail("https://raw.githubusercontent.com/Geomty/MrFactual/main/assets/MrFactualLogo.jpg");
         }
