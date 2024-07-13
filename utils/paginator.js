@@ -1,4 +1,4 @@
-// not updated for slash commands and will be used when i need it
+// not updated for slash commands
 const Discord = require("discord.js");
 const { paginatorClose } = require("../assets/constants");
 

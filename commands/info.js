@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { PermissionFlagsBits, OAuth2Scopes } = require("discord.js");
 const { woohoo, day, hour, minute } = require("../assets/constants");
 const { owner, co_owners, inspiration_bot } = require("../config").people;
 const packages = require("../package").dependencies;
@@ -7,7 +7,6 @@ module.exports = {
     name: "info",
     description: "This command shows detailed information about me.",
     execute(interaction) {
-        const perms = Permissions.FLAGS;
         let infoMessage = "";
         for (const package in packages) {
             infoMessage += `${package.charAt(0) + package.slice(1)} v${packages[package].slice(1, packages[package].length)}\n`;
@@ -40,15 +39,15 @@ module.exports = {
             { name: "Programs used:", value: `Node.js ${process.version}` },
             { name: "Packages used:", value: infoMessage },
             { name: "Links:", value: `Invite link: [Click here](${interaction.client.generateInvite({
-                scopes: ["bot"],
+                scopes: [OAuth2Scopes.Bot],
                 permissions: [
-                    perms.VIEW_CHANNEL,
-                    perms.SEND_MESSAGES,
-                    perms.EMBED_LINKS,
-                    perms.ATTACH_FILES,
-                    perms.READ_MESSAGE_HISTORY,
-                    perms.USE_EXTERNAL_EMOJIS,
-                    perms.ADD_REACTIONS
+                    PermissionFlagsBits.ViewChannel,
+                    PermissionFlagsBits.SendMessages,
+                    PermissionFlagsBits.EmbedLinks,
+                    PermissionFlagsBits.AttachFiles,
+                    PermissionFlagsBits.ReadMessageHistory,
+                    PermissionFlagsBits.UseExternalEmojis,
+                    PermissionFlagsBits.AddReactions
                 ]
             })})\nSupport server: [Click here](https://discord.gg/yXkB68EA8S)\nGitHub repository: [Click here](https://github.com/Geomty/MrFactual)` },
             { name: "Created on:", value: interaction.client.user.createdAt.toString() },
